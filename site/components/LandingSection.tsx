@@ -129,7 +129,7 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
                 onClick={signedIn ? goToDashboard : continueWithGoogle}
                 className="font-[family-name:var(--font-jakarta)] mt-1 rounded-full bg-white px-6 py-2.5 font-semibold text-black hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
               >
-                {signedIn ? "You're connected" : "Continue with Google"}
+                {signedIn ? "Go to dashboard" : "Continue with Google"}
               </motion.button>
             </motion.div>
           ) : (
