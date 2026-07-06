@@ -1,0 +1,1 @@
+Mnemos is an MCP server that gives AI assistants a persistent memory. Instead of forgetting everything between conversations, an assistant can store facts and recall them later by meaning, not just keywords. Memory is isolated per user, and facts can be permanent or set to auto-expire. Any MCP-compatible client — Claude, or your own — can connect to it.
