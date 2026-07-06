@@ -22,6 +22,7 @@ export default async function Dashboard() {
   const { data: memories, error } = await supabase
     .from("memories")
     .select("id, content, tags, created_at")
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .returns<Memory[]>();
 
