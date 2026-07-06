@@ -60,8 +60,11 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
 
   return (
     <div className="relative min-h-screen w-full bg-black">
-      <button
+      <motion.button
         onClick={() => setView(view === "hero" ? "steps" : "hero")}
+        initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
+        animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1 }}
         className="font-[family-name:var(--font-jakarta)] fixed top-6 right-6 sm:top-8 sm:right-10 text-sm font-medium text-white hover:text-gray-300 transition-colors duration-200 cursor-pointer z-10"
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -90,7 +93,7 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
             </motion.span>
           )}
         </AnimatePresence>
-      </button>
+      </motion.button>
 
       <main className="min-h-screen w-full flex items-center justify-center px-6">
         <AnimatePresence mode="wait">
@@ -174,7 +177,12 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
         </AnimatePresence>
       </main>
 
-      <p className="font-[family-name:var(--font-instrument)] italic tracking-wide fixed bottom-10 left-0 right-0 text-center text-lg text-gray-400 cursor-default">
+      <motion.p
+        initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
+        animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1 }}
+        className="font-[family-name:var(--font-instrument)] italic tracking-wide fixed bottom-10 left-0 right-0 text-center text-lg text-gray-400 cursor-default"
+      >
         Named for{" "}
         <a
           href="https://en.wikipedia.org/wiki/Mnemosyne"
@@ -185,7 +193,7 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
           Mnemosyne
         </a>
         , the Titaness who forgot nothing.
-      </p>
+      </motion.p>
     </div>
   );
 }
