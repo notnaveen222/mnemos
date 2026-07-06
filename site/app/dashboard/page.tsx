@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import SignOutButton from "@/components/SignOutButton";
+import MemoryList from "@/components/MemoryList";
 
 type Memory = {
   id: string;
@@ -31,40 +32,25 @@ export default async function Dashboard() {
       <SignOutButton />
       <main className="min-h-screen w-full px-6 pt-28 pb-16 sm:px-10">
         <div className="mx-auto max-w-2xl">
-          <h1 className="font-[family-name:var(--font-jakarta)] text-2xl font-bold text-white mb-8">
-            Your memories
-          </h1>
+          <div className="flex items-baseline gap-2 mb-8">
+            <h1 className="font-[family-name:var(--font-jakarta)] text-2xl font-bold text-white">
+              Your Mnemes
+            </h1>
+            <span className="font-[family-name:var(--font-jakarta)] text-sm text-white/40">
+              (n.) memory
+            </span>
+          </div>
 
           {error ? (
             <p className="font-[family-name:var(--font-jakarta)] text-red-400">
-              Couldn&apos;t load your memories right now. Try refreshing.
+              Couldn&apos;t load your mnemes right now. Try refreshing.
             </p>
           ) : !memories || memories.length === 0 ? (
             <p className="font-[family-name:var(--font-jakarta)] text-gray-400">
-              Nothing saved yet.
+              No mnemes yet.
             </p>
           ) : (
-            <ul className="flex flex-col gap-4">
-              {memories.map((memory) => (
-                <li
-                  key={memory.id}
-                  className="font-[family-name:var(--font-jakarta)] rounded-xl border border-white/10 bg-white/5 px-5 py-4"
-                >
-                  <p className="text-white">{memory.content}</p>
-                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-                    <span>{new Date(memory.created_at).toLocaleString()}</span>
-                    {memory.tags?.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-white/10 px-2 py-0.5"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <MemoryList initialMemories={memories} userId={user.id} />
           )}
         </div>
       </main>
