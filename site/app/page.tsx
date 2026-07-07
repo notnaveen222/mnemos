@@ -4,8 +4,8 @@ import LandingSection from "@/components/LandingSection";
 export default async function Home() {
   const supabase = await createClient();
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  return <LandingSection signedIn={!!user} />;
+  return <LandingSection signedIn={!!session} />;
 }
