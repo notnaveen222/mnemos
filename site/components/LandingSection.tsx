@@ -90,7 +90,7 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
         initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
         animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1 }}
-        className="font-[family-name:var(--font-jakarta)] fixed top-6 right-6 sm:top-8 sm:right-10 text-sm font-medium text-white hover:text-gray-300 transition-colors duration-200 cursor-pointer z-20"
+        className="font-[family-name:var(--font-jakarta)] fixed top-6 right-6 sm:top-8 sm:right-10 z-20 flex h-7 items-center text-sm font-medium text-white hover:text-gray-300 transition-colors duration-200 cursor-pointer"
       >
         <AnimatePresence mode="wait" initial={false}>
           {view === "hero" ? (

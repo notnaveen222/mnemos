@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import SignOutButton from "@/components/SignOutButton";
 import MemoryList from "@/components/MemoryList";
+import DashboardHeading from "@/components/DashboardHeading";
 
 type Memory = {
   id: string;
@@ -32,14 +33,7 @@ export default async function Dashboard() {
       <SignOutButton />
       <main className="min-h-screen w-full px-6 pt-28 pb-16 sm:px-10">
         <div className="mx-auto max-w-2xl">
-          <div className="flex items-baseline gap-2 mb-8">
-            <h1 className="font-[family-name:var(--font-jakarta)] text-2xl font-bold text-white">
-              Your Mnemes
-            </h1>
-            <span className="font-[family-name:var(--font-jakarta)] text-sm text-white/40">
-              (n.) memory
-            </span>
-          </div>
+          <DashboardHeading />
 
           {error ? (
             <p className="font-[family-name:var(--font-jakarta)] text-red-400">

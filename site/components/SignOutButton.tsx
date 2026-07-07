@@ -16,7 +16,7 @@ export default function SignOutButton() {
   return (
     <button
       onClick={signOut}
-      className="font-[family-name:var(--font-jakarta)] fixed top-6 right-6 sm:top-8 sm:right-10 text-sm font-medium text-white hover:text-gray-300 transition-colors duration-200 cursor-pointer z-10"
+      className="font-[family-name:var(--font-jakarta)] fixed top-6 right-6 sm:top-8 sm:right-10 z-10 flex h-7 items-center text-sm font-medium text-white hover:text-gray-300 transition-colors duration-200 cursor-pointer"
     >
       Sign out
     </button>

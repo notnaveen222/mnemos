@@ -1,8 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, type Variants } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
 
 type Memory = {
   id: string;
@@ -40,6 +50,7 @@ export default function MemoryList({
   userId: string;
 }) {
   const supabase = createClient();
+  const reduceMotion = useReducedMotion();
   const [memories, setMemories] = useState(initialMemories);
   const [pendingDelete, setPendingDelete] = useState<Memory | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -61,10 +72,16 @@ export default function MemoryList({
 
   return (
     <>
-      <ul className="flex flex-col">
+      <motion.ul
+        className="flex flex-col"
+        variants={reduceMotion ? undefined : container}
+        initial={reduceMotion ? undefined : "hidden"}
+        animate={reduceMotion ? undefined : "show"}
+      >
         {memories.map((memory) => (
-          <li
+          <motion.li
             key={memory.id}
+            variants={item}
             className="font-[family-name:var(--font-jakarta)] border-b border-white/10 py-5 last:border-b-0"
           >
             <div className="flex items-start justify-between gap-3">
@@ -85,9 +102,9 @@ export default function MemoryList({
                 </span>
               ))}
             </div>
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
 
       <AnimatePresence>
         {pendingDelete && (
