@@ -11,7 +11,7 @@ export default function Logo() {
       initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
       animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 1 }}
-      className="fixed top-6 left-6 sm:top-8 sm:left-10 z-10"
+      className="fixed top-6 left-6 sm:top-8 sm:left-10 z-20"
     >
       <Link
         href="/"

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   motion,
@@ -60,12 +62,35 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
 
   return (
     <div className="relative min-h-screen w-full bg-black">
+      <motion.div
+        className="pointer-events-none absolute inset-0 z-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: view === "steps" ? 0.2 : 0.7 }}
+        transition={{ duration: reduceMotion ? 0 : 1, ease: "easeOut" }}
+      >
+        <Image
+          src="/wallpaper.png"
+          alt=""
+          fill
+          priority
+          quality={60}
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </motion.div>
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 55% 40% at 50% 65%, transparent 0%, black 80%)",
+        }}
+      />
       <motion.button
         onClick={() => setView(view === "hero" ? "steps" : "hero")}
         initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
         animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1 }}
-        className="font-[family-name:var(--font-jakarta)] fixed top-6 right-6 sm:top-8 sm:right-10 text-sm font-medium text-white hover:text-gray-300 transition-colors duration-200 cursor-pointer z-10"
+        className="font-[family-name:var(--font-jakarta)] fixed top-6 right-6 sm:top-8 sm:right-10 text-sm font-medium text-white hover:text-gray-300 transition-colors duration-200 cursor-pointer z-20"
       >
         <AnimatePresence mode="wait" initial={false}>
           {view === "hero" ? (
@@ -95,7 +120,7 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
         </AnimatePresence>
       </motion.button>
 
-      <main className="min-h-screen w-full flex items-center justify-center px-6">
+      <main className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 -translate-y-16 sm:-translate-y-20">
         <AnimatePresence mode="wait">
           {view === "hero" ? (
             <motion.div
@@ -134,6 +159,15 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
               >
                 {signedIn ? "Go to dashboard" : "Continue with Google"}
               </motion.button>
+
+              <motion.div variants={item}>
+                <Link
+                  href="/docs"
+                  className="font-[family-name:var(--font-jakarta)] text-sm text-white/50 underline underline-offset-4 hover:text-white transition-colors duration-200"
+                >
+                  Docs
+                </Link>
+              </motion.div>
             </motion.div>
           ) : (
             <motion.div
@@ -181,7 +215,7 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
         initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
         animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1 }}
-        className="font-[family-name:var(--font-instrument)] italic tracking-wide fixed bottom-10 left-0 right-0 text-center text-lg text-gray-400 cursor-default"
+        className="font-[family-name:var(--font-instrument)] italic tracking-wide fixed bottom-10 left-0 right-0 text-center text-sm sm:text-lg text-gray-400 cursor-default z-20"
       >
         Named for{" "}
         <a

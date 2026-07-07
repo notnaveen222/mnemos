@@ -16,9 +16,26 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
 });
 
+const description =
+  "Portable memory for your AI. Remembered once, recalled everywhere.";
+
 export const metadata: Metadata = {
-  title: "mnemos",
-  description: "Portable memory for your AI. Remembered once, recalled everywhere.",
+  title: {
+    default: "mnemos",
+    template: "%s — mnemos",
+  },
+  description,
+  openGraph: {
+    title: "mnemos",
+    description,
+    siteName: "mnemos",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "mnemos",
+    description,
+  },
 };
 
 export default function RootLayout({
