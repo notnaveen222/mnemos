@@ -1,5 +1,0 @@
-# ONLY the Vercel entrypoint hint. Deliberately no [project] table: adding one
-# makes Vercel install deps from here and ignore requirements.txt. We want
-# requirements.txt to be the single source of dependencies.
-[tool.vercel]
-entrypoint = "app:app"
