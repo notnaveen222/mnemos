@@ -1,0 +1,17 @@
+[Unit]
+Description=mnemos MCP server (streamable HTTP + OAuth)
+After=network.target
+
+[Service]
+Type=simple
+User=mnemos
+WorkingDirectory=/opt/mnemos/mcp-server
+EnvironmentFile=/opt/mnemos/mcp-server/.env
+ExecStart=/opt/mnemos/mcp-server/.venv/bin/python server.py
+Restart=always
+RestartSec=3
+# Give the first request time to download the embedding model.
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target

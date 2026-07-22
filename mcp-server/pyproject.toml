@@ -1,0 +1,10 @@
+[project]
+name = "mnemos-mcp"
+version = "0.1.0"
+description = "Portable remote MCP memory server (remember / recall / forget)."
+requires-python = ">=3.10"
+
+# Tell Vercel exactly which ASGI app to serve, removing any ambiguity between
+# the candidate entrypoint filenames (app.py, server.py, index.py, ...).
+[tool.vercel]
+entrypoint = "app:app"

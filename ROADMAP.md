@@ -13,39 +13,48 @@ and gets `remember` / `recall` / `forget` tools scoped to that user's own data.
 - [x] Website (`site/`): Next.js + Tailwind, Supabase Auth w/ Google OAuth,
       dashboard (list/delete memories), docs page, deployed on Vercel.
 
+### Multi-user data model
+- [x] `memories.user_id` (already present, FK to auth.users).
+- [x] OAuth tables: `oauth_clients`, `oauth_codes`, `oauth_tokens` (RLS on,
+      no policies → service-role only).
+- [x] `match_memories` RPC now takes `match_user_id` and filters by it; old
+      unscoped 2-arg version dropped.
+
+### HTTP transport
+- [x] `server.py` runs `streamable-http` transport (was stdio).
+- [x] Per-request user resolution via `_current_user_id()`; all 5 tools and all
+      `db.py` functions scoped by `user_id`.
+
+### Real MCP OAuth
+- [x] OAuth discovery, `/authorize` `/token` `/register` (DCR) `/revoke` — all
+      SDK-served; `SupabaseOAuthProvider` supplies the storage/business logic.
+- [x] `/oauth/finish` custom route: verifies a Supabase session token, mints a
+      single-use auth code bound to the real user.
+- [x] Next.js `/oauth/consent` bridge + `next=` passthrough in `/auth/callback`
+      and the landing sign-in.
+- [x] Smoke-tested locally: discovery, DCR, `/authorize`→consent redirect, and
+      401+discovery on unauthenticated MCP calls all verified.
+
+### Deploy
+- [x] `requirements.txt`, `.env.example`, systemd unit, Caddyfile, `DEPLOY.md`
+      (GCP e2-micro Always Free + Caddy TLS).
+- [ ] Provision the GCP VM, DNS, and run through `DEPLOY.md` for real.
+- [ ] Add `MNEMOS_MCP_URL` to Vercel and redeploy the site.
+
+### Cutover
+- [ ] Add the HTTPS MCP URL in Claude, confirm consent + per-user isolation
+      end-to-end.
+- [ ] Retire the local stdio-only setup.
+
 ---
 
-## To build
+## Open decision
 
-### 1. Multi-user data model
-- [ ] Add `user_id` column to `memories`.
-- [ ] Add tables for the OAuth layer below: `oauth_clients`, `oauth_codes`,
-      `oauth_tokens` (access + refresh).
-
-### 2. HTTP transport
-- [ ] Switch `server.py` from `mcp.run()` (stdio) to streamable HTTP transport.
-- [ ] Host the Python server somewhere always-on — Railway or Fly.io (not
-      Vercel; that's for the Next.js site, not a long-running Python process).
-- [ ] Get it live over HTTPS (e.g. `mcp.mnemos.app`).
-
-### 3. Real MCP OAuth
-- [ ] Serve OAuth Protected Resource Metadata
-      (`/.well-known/oauth-protected-resource`) per the MCP auth spec.
-- [ ] Minimal Authorization Server, identity backed by existing Supabase Auth:
-  - `/authorize` — reuse the existing Supabase session/login, then redirect
-    back with a code.
-  - `/token` — exchange code (PKCE) for access + refresh tokens.
-  - `/register` — Dynamic Client Registration, so Claude/ChatGPT can register
-    themselves with no manual setup.
-- [ ] Auth middleware on the MCP HTTP endpoint: validate bearer token →
-      resolve `user_id` → attach to request context.
-- [ ] Update all 5 tools in `server.py` / `db.py` to filter/write using the
-      resolved `user_id` instead of querying globally.
-
-### 4. Cutover
-- [ ] Add the new HTTPS URL as a remote MCP server in Claude, confirm the
-      OAuth consent screen appears and all 5 tools work end-to-end per-user.
-- [ ] Retire the local stdio-only setup.
+- [ ] **RLS on `public.memories`** is still disabled. The site reads via the
+      publishable key + user session, so enabling RLS requires a policy like
+      `user_id = auth.uid()` for select/insert/update/delete, or the dashboard
+      breaks. The Python server uses the service key (bypasses RLS) either way.
+      SQL is ready to apply on your go.
 
 ---
 

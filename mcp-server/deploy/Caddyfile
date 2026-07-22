@@ -1,0 +1,5 @@
+# Caddy terminates TLS (auto Let's Encrypt) and proxies to the Python server.
+# Replace mcp.mnemos.app with your real subdomain, pointed at this VM's IP.
+mcp.mnemos.app {
+	reverse_proxy 127.0.0.1:8000
+}

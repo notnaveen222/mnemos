@@ -1,0 +1,6 @@
+# Things that should never go into the image (secrets, junk, GCP-only files).
+__pycache__/
+*.pyc
+.env
+.venv/
+deploy/

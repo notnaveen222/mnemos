@@ -52,9 +52,16 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
   const [view, setView] = useState<"hero" | "steps">("hero");
 
   const continueWithGoogle = async () => {
+    // Carry a same-origin ?next= through login (e.g. when an MCP client sent
+    // the user here to link their account) so we return there afterwards.
+    const nextParam = new URLSearchParams(window.location.search).get("next");
+    const callback = new URL(`${window.location.origin}/auth/callback`);
+    if (nextParam && nextParam.startsWith("/")) {
+      callback.searchParams.set("next", nextParam);
+    }
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: callback.toString() },
     });
   };
 
