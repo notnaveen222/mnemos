@@ -1,10 +1,5 @@
-[project]
-name = "mnemos-mcp"
-version = "0.1.0"
-description = "Portable remote MCP memory server (remember / recall / forget)."
-requires-python = ">=3.10"
-
-# Tell Vercel exactly which ASGI app to serve, removing any ambiguity between
-# the candidate entrypoint filenames (app.py, server.py, index.py, ...).
+# ONLY the Vercel entrypoint hint. Deliberately no [project] table: adding one
+# makes Vercel install deps from here and ignore requirements.txt. We want
+# requirements.txt to be the single source of dependencies.
 [tool.vercel]
 entrypoint = "app:app"
