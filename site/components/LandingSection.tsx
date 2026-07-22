@@ -174,9 +174,9 @@ export default function LandingSection({
                 {signedIn ? "Go to dashboard" : "Continue with Google"}
               </motion.button>
 
-              {/* Outside the staggered fade so the frosted glass is fully
-                  opaque from the first frame (no "fades to glassy" delay). */}
-              <McpConnect mcpUrl={mcpUrl} className="mt-2" />
+              <motion.div variants={item} className="mt-2">
+                <McpConnect mcpUrl={mcpUrl} />
+              </motion.div>
 
               <motion.div variants={item}>
                 <Link
