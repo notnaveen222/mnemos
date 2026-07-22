@@ -11,6 +11,7 @@ import {
   type Variants,
 } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
+import McpConnect from "@/components/McpConnect";
 
 const container: Variants = {
   hidden: {},
@@ -45,7 +46,13 @@ const STEPS = [
   },
 ];
 
-export default function LandingSection({ signedIn }: { signedIn: boolean }) {
+export default function LandingSection({
+  signedIn,
+  mcpUrl,
+}: {
+  signedIn: boolean;
+  mcpUrl: string;
+}) {
   const supabase = createClient();
   const router = useRouter();
   const reduceMotion = useReducedMotion();
@@ -166,6 +173,10 @@ export default function LandingSection({ signedIn }: { signedIn: boolean }) {
               >
                 {signedIn ? "Go to dashboard" : "Continue with Google"}
               </motion.button>
+
+              {/* Outside the staggered fade so the frosted glass is fully
+                  opaque from the first frame (no "fades to glassy" delay). */}
+              <McpConnect mcpUrl={mcpUrl} className="mt-2" />
 
               <motion.div variants={item}>
                 <Link

@@ -10,7 +10,7 @@ export default function DashboardHeading() {
       initial={reduceMotion ? undefined : { opacity: 0 }}
       animate={reduceMotion ? undefined : { opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="flex items-baseline gap-2 mb-8"
+      className="flex items-baseline gap-2 mb-3"
     >
       <h1 className="font-[family-name:var(--font-jakarta)] text-2xl font-bold text-white">
         Your Mnemes
